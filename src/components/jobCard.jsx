@@ -4,6 +4,13 @@ const JobCard = ({ job }) => {
     <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div>
         <h3 className="text-lg font-semibold text-slate-900">{job.title}</h3>
+        const isSaved = saved.some((s) => s.title === job.title && s.company ===
+        job.company);
+        {isSaved && (
+          <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+            Saved
+          </span>
+        )}
         <p className="text-slate-600">
           {job.company} • {job.location}
         </p>

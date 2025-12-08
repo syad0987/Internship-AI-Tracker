@@ -3,7 +3,9 @@ import { auth } from "./firebase";
 import { useJobs } from "./hooks/useJobs";
 import SavedInternship from "./components/SavedInternships";
 import JobCard from "./components/jobCard";
-import { fromJSON } from "postcss";
+import AuthBar from "./components/AuthBar";
+
+// import { fromJSON } from "postcss";
 function App() {
   const [firebaseReady, setFirebaseReady] = useState(false);
   useEffect(() => {
@@ -31,6 +33,7 @@ function App() {
           <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             AI Internship Tracker {firebaseReady ? "✅" : "⏳"}
           </h2>
+          <AuthBar />
         </div>
       </nav>
       <main className="p-6 text-slate-700">
@@ -81,7 +84,9 @@ function App() {
               <JobCard key={job.id} job={job}></JobCard>
             ))}
           </div>
-          <SavedInternship />
+          <div className="mt-20 pt-10 border-t-4 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-2xl">
+            <SavedInternship />
+          </div>
         </div>
       </main>
     </div>

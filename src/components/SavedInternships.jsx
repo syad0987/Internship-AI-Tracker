@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { auth, db } from "./../firebase";
 import {
   collection,
   onSnapshot,
@@ -7,10 +8,10 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { db } from "./../firebase";
-import { data } from "autoprefixer";
 
-const dEMO_USER_ID = "demo-user";
+import AuthBar from "./AuthBar";
+import JobCard from "./JobCard";
+
 export default function SavedInternship() {
   const [saved, setSaved] = useState([]);
 
@@ -20,17 +21,27 @@ export default function SavedInternship() {
   ).length;
   const recentCount = saved.filter(
     (job) =>
-      job.createAt &&
-      new Date(job.createAt.toDate()) >
+      job.createdAt &&
+      new Date(job.createdAt.toDate()) >
         new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   ).length;
+
   useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) {
+      console.log("👤 No user logged in");
+      setSaved([]);
+      return;
+    }
+    console.log("🔐 User logged in:", user.uid);
+
     const q = query(
-      collection(db, "users", dEMO_USER_ID, "savedInternships"),
+      collection(db, "users", user.uid, "savedInternships"),
       orderBy("createdAt", "desc")
     );
     const unsub = onSnapshot(q, (snapshot) => {
       const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      console.log(" Firestore data received:", items);
       setSaved(items);
     });
     return () => unsub();
@@ -38,11 +49,18 @@ export default function SavedInternship() {
 
   const handleRemove = async (id) => {
     try {
-      deleteDoc(doc(db, "users", dEMO_USER_ID, "savedInternships", id));
+      const user = auth.currentUser;
+      if (!user) {
+        console.log("No user logged in");
+        return;
+      }
+
+      await deleteDoc(doc(db, "users", user.uid, "savedInternships", id));
     } catch (err) {
       console.error("error deleting saved internship", err);
     }
   };
+
   return (
     <div className="mt-10 border-t border-slate-200 pt-6">
       <div className="mb-4 p-3 bg-slate-50 rounded-xl">
@@ -50,8 +68,10 @@ export default function SavedInternship() {
           Total saved:
           <span className="font-semibold text-slate-900">{total}</span> •
           Remote:
-          <span className="font-semibold text-emerald-600">{remoteCount}</span>•
-          Recent:
+          <span className="font-semibold text-emerald-600">
+            {remoteCount}
+          </span>{" "}
+          • Recent:
           <span className="font-semibold text-blue-600">{recentCount}</span>
         </p>
       </div>
@@ -67,12 +87,12 @@ export default function SavedInternship() {
         {saved.map((job) => (
           <div
             key={job.id}
-            className="p-3 rounded-xl bg-white border border-slate-200  text-sm flex justify-between gap-3"
+            className="p-3 rounded-xl bg-white border border-slate-200 text-sm flex justify-between gap-3"
           >
             <div>
               <p className="font-semibold text-slate-900">{job.title}</p>
               <p className="text-slate-600">
-                {job.company}.{job.location}
+                {job.company} • {job.location}
               </p>
             </div>
             <button

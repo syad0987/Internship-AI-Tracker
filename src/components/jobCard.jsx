@@ -1,16 +1,20 @@
-import SavejobButton from "./savejobButton";
-const JobCard = ({ job }) => {
+import SaveJobButton from "./SavejobButton";
+const JobCard = ({ job, saved = [] }) => {
+  const isSaved = saved.some(
+    (s) => s.title === job.title && s.company === job.company
+  );
   return (
     <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div>
-        <h3 className="text-lg font-semibold text-slate-900">{job.title}</h3>
-        const isSaved = saved.some((s) => s.title === job.title && s.company ===
-        job.company);
-        {isSaved && (
-          <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
-            Saved
-          </span>
-        )}
+        <h3 className="text-lg font-semibold text-slate-900">
+          {job.title}
+
+          {isSaved && (
+            <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+              Saved
+            </span>
+          )}
+        </h3>
         <p className="text-slate-600">
           {job.company} • {job.location}
         </p>
@@ -31,7 +35,7 @@ const JobCard = ({ job }) => {
       </div>
 
       <div className="flex gap-2">
-        <SavejobButton job={job}></SavejobButton>
+        <SaveJobButton job={job}></SaveJobButton>
 
         <a
           href={job.applyUrl}

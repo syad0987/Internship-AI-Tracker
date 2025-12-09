@@ -1,5 +1,10 @@
 import { auth, db } from "../firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 const handleSaveJob = async (job) => {
   const user = auth.currentUser;
@@ -15,6 +20,12 @@ const handleSaveJob = async (job) => {
       location: job.location,
       stipend: job.stipend,
       skills: job.skills,
+      status: "wishlist",
+      mode: job.location.toLowerCase().includes("remote")
+        ? "remote"
+        : job.location.toLowerCase().includes("hybrid")
+        ? "hybrid"
+        : "onsite",
       createdAt: serverTimestamp(),
     });
     console.log("✅ Saved:", job.title);

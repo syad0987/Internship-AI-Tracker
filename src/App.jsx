@@ -7,6 +7,12 @@ import AuthBar from "./components/AuthBar";
 
 // import { fromJSON } from "postcss";
 function App() {
+  const [toast, setToast] = useState("");
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(""), 2000);
+  };
+
   const [firebaseReady, setFirebaseReady] = useState(false);
   useEffect(() => {
     console.log("Firebase:", auth);
@@ -81,14 +87,19 @@ function App() {
               </p>
             )}
             {jobs.map((job) => (
-              <JobCard key={job.id} job={job}></JobCard>
+              <JobCard key={job.id} job={job} showToast={showToast}></JobCard>
             ))}
           </div>
           <div className="mt-20 pt-10 border-t-4 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-2xl">
-            <SavedInternship />
+            <SavedInternship showToast={showToast} />
           </div>
         </div>
       </main>
+      {toast && (
+        <div className="fixed bottom-4 right-4 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm shadow-lg">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

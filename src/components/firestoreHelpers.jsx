@@ -1,12 +1,7 @@
 import { auth, db } from "../firebase";
-import {
-  addDoc,
-  collection,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
-const handleSaveJob = async (job) => {
+const handleSaveJob = async (job, showToast) => {
   const user = auth.currentUser;
   if (!user) {
     alert("Please Log in to save internships");
@@ -28,6 +23,8 @@ const handleSaveJob = async (job) => {
         : "onsite",
       createdAt: serverTimestamp(),
     });
+    showToast?.("Internship saved!");
+
     console.log("✅ Saved:", job.title);
   } catch (error) {
     console.error("Save error:", error);

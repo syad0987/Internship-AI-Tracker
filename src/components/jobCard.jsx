@@ -1,5 +1,6 @@
 import SaveJobButton from "./SavejobButton";
-const JobCard = ({ job, saved = [] }) => {
+
+const JobCard = ({ job, saved = [], showToast }) => {
   const isSaved = saved.some(
     (s) => s.title === job.title && s.company === job.company
   );
@@ -35,7 +36,7 @@ const JobCard = ({ job, saved = [] }) => {
       </div>
 
       <div className="flex gap-2">
-        <SaveJobButton job={job}></SaveJobButton>
+        <SaveJobButton job={job} showToast={showToast}></SaveJobButton>
 
         <a
           href={job.applyUrl}

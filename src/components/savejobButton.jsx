@@ -1,8 +1,8 @@
 import handleSaveJob from "./firestoreHelpers";
-const SaveJobButton = ({ job }) => {
+const SaveJobButton = ({ job, showToast }) => {
   const handleClick = async () => {
     try {
-      await handleSaveJob(job);
+      await handleSaveJob(job, showToast);
       console.log("Saved to Firestore:", job.title);
     } catch (e) {
       console.error("Error saving job:", e);

@@ -19,16 +19,6 @@ import { Toast } from "bootstrap";
 export default function SavedInternship({ showToast }) {
   const [saved, setSaved] = useState([]);
   const [loading, setLoading] = useState(true);
-  const total = saved.length;
-  const remoteCount = saved.filter((job) =>
-    job.location?.toLowerCase().includes("remote")
-  ).length;
-  const recentCount = saved.filter(
-    (job) =>
-      job.createdAt &&
-      new Date(job.createdAt.toDate()) >
-        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-  ).length;
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
@@ -75,24 +65,21 @@ export default function SavedInternship({ showToast }) {
   };
 
   return (
-    <div className="mt-0 border-t border-slate-200 pt-2">
-      <div className="mb-4 p-3 bg-slate-50 rounded-xl">
-        <p className="text-xs text-slate-500">
-          Total saved:
-          <span className="font-semibold text-slate-900">{total}</span> •
-          Remote:
-          <span className="font-semibold text-emerald-600">{remoteCount}</span>•
-          Recent:
-          <span className="font-semibold text-blue-600">{recentCount}</span>
-        </p>
-      </div>
-      <div className="mt-0 border-t border-slate-200 pt-2">
+    <div className="mt-0 border-t border-slate-300 pt-4">
+      {/* Analytics */}
+      <div className="mt-0   border-slate-300 pt-4">
         <Analytics saved={saved} />
       </div>
-      <h3 className="text-2xl text-slate-900 mb-3 mt-4 flex flex-wrap justify-center  bg-gradient-to-r font-bold from-blue-600 to-pink-600  bg-clip-text  text-transparent">
+
+      {/* Heading */}
+      <h3
+        className="text-2xl text-slate-900 mb-4 mt-6 text-center font-bold
+      bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent border-t border-slate-300 pt-4"
+      >
         Saved Internships ({saved.length})
       </h3>
 
+      {/* Saved List */}
       <div>
         {loading ? (
           <SkeletonLoader />
@@ -102,7 +89,9 @@ export default function SavedInternship({ showToast }) {
           saved.map((job) => (
             <div
               key={job.id}
-              className="p-3 rounded-xl bg-white border border-slate-200 text-sm flex justify-between gap-3"
+              className="p-4 rounded-xl bg-slate-50 border border-slate-300
+            text-sm flex justify-between gap-3 shadow-sm hover:shadow-md
+            transition-all duration-200"
             >
               <div>
                 <p className="font-semibold text-slate-900">{job.title}</p>
@@ -118,21 +107,21 @@ export default function SavedInternship({ showToast }) {
                     const newstatus = e.target.value;
                     try {
                       const user = auth.currentUser;
-                      if (!user) {
-                        console.log("No user logged in");
-                        return;
-                      }
+                      if (!user) return;
+
                       await updateDoc(
                         doc(db, "users", user.uid, "savedInternships", job.id),
                         { status: newstatus }
                       );
-
-                      console.log("status update to:", newstatus);
                     } catch (error) {
                       console.error("Error updating status:", error);
                     }
                   }}
-                  className="text-sm border rounded px-2 py-1"
+                  className="text-sm border border-slate-300 rounded-lg px-3 py-1.5
+      bg-slate-50 text-slate-800 shadow-sm
+      hover:border-slate-400
+      focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400
+      transition"
                 >
                   <option value="wishlist">Wishlist</option>
                   <option value="applied">Applied</option>
@@ -141,9 +130,11 @@ export default function SavedInternship({ showToast }) {
                   <option value="rejected">Rejected</option>
                 </select>
               </div>
+
               <button
                 onClick={() => handleRemove(job.id)}
-                className="text-xs px-3 py-1 rounded-full border border-red-300 text-red-600 hover:bg-red-50"
+                className="text-xs px-3 py-1 rounded-full border border-red-300
+              text-red-600 hover:bg-red-100 transition"
               >
                 Remove
               </button>

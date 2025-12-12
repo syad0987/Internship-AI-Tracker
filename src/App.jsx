@@ -5,12 +5,11 @@ import SavedInternship from "./components/SavedInternships";
 import JobCard from "./components/jobCard";
 import AuthBar from "./components/AuthBar";
 
-// import { fromJSON } from "postcss";
 function App() {
   const [toast, setToast] = useState("");
   const showToast = (msg) => {
     setToast(msg);
-    setTimeout(() => setToast(""), 2000);
+    setTimeout(() => setToast(""), 2500);
   };
 
   const [firebaseReady, setFirebaseReady] = useState(false);
@@ -26,130 +25,194 @@ function App() {
     location: "",
   });
   const { jobs, loading } = useJobs(submittedQuery);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setSubmittedQuery({ role, location });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-500 via-blue-50 to-indigo-500">
-      <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200">
-        <div className="flex flex-wrap max-w-7xl mx-auto px-6 py-4 justify-between">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            AI Internship Tracker {firebaseReady ? "✅" : "⏳"}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 overflow-x-hidden">
+      {/*  Navigation */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/95 backdrop-blur-xl shadow-2xl border-b border-slate-700/50 supports-[backdrop-filter:blur()]:bg-slate-900/90">
+        <div className="flex flex-wrap max-w-7xl mx-auto px-6 py-5 justify-between items-center">
+          <h2 className="text-3xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent hover:scale-105 hover:rotate-1 transition-all duration-500 ease-out group-hover:scale-110">
+            AI Internship Tracker
+            <span className="ml-2 inline-block transition-all duration-700 animate-pulse">
+              {firebaseReady ? "✅" : "⏳"}
+            </span>
           </h2>
           <AuthBar />
         </div>
       </nav>
-      <main className="p-6 text-slate-700">
-        <div className="max-w-4xl mx-auto px-6   py-10 ">
-          <section
-            className="py-20 bg-gradient-to-r from-slate-50 to-slate-50 text-center
-          "
-          >
-            <div className="max-w-4xl mx-auto px-4">
-              <h1>Find your next internship</h1>
-              <p>
-                5000+ remot & onsite internship. Save, track applications, and
-                get analytics.
+
+      <main className="p-6 text-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Hero Section */}
+          <section className="py-15 md:py-32 relative overflow-hidden bg-gradient-to-br from-slate-800/90 via-indigo-900/80 to-slate-900/90 border border-slate-700/50 rounded-3xl shadow-2xl backdrop-blur-sm before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-500/20 before:to-purple-500/20 before:rounded-3xl">
+            <div className="relative z-10 px-6 sm:px-8 text-center border border-slate-600/50 rounded-3xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 backdrop-blur-xl p-10 sm:p-12 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:-translate-y-2 mx-6 py-5">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 rounded-3xl blur-xl animate-pulse"></div>
+
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight bg-gradient-to-r from-slate-100 via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+                Find Your Dream
+                <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 text-transparent bg-clip-text drop-shadow-xl">
+                  Internship
+                </span>
+              </h1>
+
+              <p className="text-xl sm:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed opacity-90 drop-shadow-sm">
+                5000+ remote & onsite internships across 100+ companies. Save,
+                track applications, and unlock powerful analytics.
               </p>
+
               <form
-                action=""
-                className="flex flex-col md:flex-row gap-4 mb-8"
+                className="flex flex-col lg:flex-row gap-4 items-end max-w-4xl mx-auto group"
                 onSubmit={handleSubmit}
+                role="search"
+                aria-label="Search internships"
               >
+                <label htmlFor="role" className="sr-only">
+                  Role
+                </label>
                 <input
-                  type="text "
+                  id="role"
+                  type="text"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  placeholder="Role (e.g. React, Frontent)"
-                  className="flex-1 px-4 py-3 rounded-xl border border-slate-500 
-              focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Role (React, Frontend, Data Science...)"
+                  className="flex-1 px-6 py-4 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
+                    focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/30 
+                    focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
+                    transition-all duration-300 ease-out placeholder-slate-400
+                    text-lg font-medium group-hover:scale-[1.02] group-focus-within:scale-[1.02] text-slate-200"
                 />
+
+                <label htmlFor="location" className="sr-only">
+                  Location
+                </label>
                 <input
+                  id="location"
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="location (Remote, Banglore...)"
-                  className="flex-1 px-4 py-3 rounded-xl border border-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Location (Remote, Bangalore, Mumbai...)"
+                  className="flex-1 px-6 py-4 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
+                    focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/30 
+                    focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
+                    transition-all duration-300 ease-out placeholder-slate-400
+                    text-lg font-medium group-hover:scale-[1.02] group-focus-within:scale-[1.02] text-slate-200"
+                  aria-label="Location"
                 />
+
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold 
-              shadow-lg hover:scale-105 transition "
+                  className="px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 
+                    text-white font-black text-lg shadow-2xl hover:shadow-3xl hover:scale-105 active:scale-95 
+                    focus:outline-none focus:ring-4 focus:ring-indigo-400/50
+                    transition-all duration-300 ease-out hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
+                    backdrop-blur-sm border border-indigo-500/40 whitespace-nowrap"
+                  aria-label="Search internships"
                 >
-                  Search
+                  🔍 Search Internships
                 </button>
               </form>
             </div>
           </section>
-          <section className="py-20 bg-white">
-            <div className="max-w-4xl mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center text-slate-900 mb-16">
-                How it works
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center p-8">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <span className="text-2xl">🔍</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                    Search
-                  </h3>
-                  <p className="text-slate-600">
-                    Find internships by skills, location, stipend.
+
+          {/* Job Results */}
+          <section className="py-16">
+            <div className="space-y-6">
+              {loading && (
+                <div className="text-center py-20">
+                  <div className="inline-block w-12 h-12 border-4 border-blue-500/30 border-t-blue-400 rounded-full animate-spin mb-4"></div>
+                  <p className="text-xl text-slate-400 font-medium animate-pulse">
+                    Searching internships...
                   </p>
                 </div>
-                <div className="text-center p-8">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <span className="text-2xl">💾</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                    Save & Track
+              )}
+              {!loading && jobs.length === 0 && submittedQuery.role && (
+                <div className="text-center py-20 bg-gradient-to-r from-slate-800/50 to-indigo-900/50 rounded-3xl p-12 border border-slate-700/50">
+                  <div className="text-6xl mb-6">🔍</div>
+                  <h3 className="text-2xl font-bold text-slate-200 mb-4">
+                    No internships found
                   </h3>
-                  <p className="text-slate-600">
-                    Save jobs, update status (applied, interview).
+                  <p className="text-xl text-slate-400 max-w-md mx-auto">
+                    Try different keywords or broaden your location search.
                   </p>
                 </div>
-                <div className="text-center p-8">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <span className="text-2xl">📊</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                    Analytics
-                  </h3>
-                  <p className="text-slate-600">
-                    See your progress with remote/applied stats.
-                  </p>
-                </div>
-              </div>
+              )}
+              {jobs.map((job) => (
+                <JobCard key={job.id} job={job} showToast={showToast} />
+              ))}
             </div>
           </section>
 
-          {/* render cards */}
-          <div className="space-y-4">
-            {loading && (
-              <p className="text-slate-500">Searching interships...</p>
-            )}
-            {!loading && jobs.length === 0 && submittedQuery.role && (
-              <p className="text-slate-500">
-                No internships found. Try another role or location.
-              </p>
-            )}
-            {jobs.map((job) => (
-              <JobCard key={job.id} job={job} showToast={showToast}></JobCard>
-            ))}
-          </div>
-
-          <div className="mt-20 pt-10 border-t-4 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-2xl">
+          {/* Saved Section */}
+          <div className="mt-24 pt-12 border-t-8 border-gradient-to-r border-indigo-500/30 bg-gradient-to-br from-slate-800/70 via-indigo-900/60 to-slate-900/70 rounded-3xl p-12 shadow-2xl backdrop-blur-xl border  hover:shadow-3xl transition-all duration-500 hover:-translate-y-1">
             <SavedInternship showToast={showToast} />
           </div>
+
+          {/* How It Works */}
+          <section className="py-24 bg-gradient-to-b from-slate-800/90 to-slate-900/90 rounded-3xl shadow-2xl border border-slate-700/50 backdrop-blur-sm">
+            <div className="max-w-6xl mx-auto px-6">
+              <h2 className="text-4xl md:text-5xl font-black text-center text-slate-100 mb-4 bg-gradient-to-r from-slate-100 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">
+                How It Works
+              </h2>
+              <p className="text-xl text-slate-400 text-center max-w-2xl mx-auto mb-20 opacity-90">
+                Three simple steps to land your dream internship
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  {
+                    icon: "🔍",
+                    title: "Smart Search",
+                    desc: "Find internships by skills, location, stipend, and company",
+                    color: "from-blue-500 to-cyan-500",
+                  },
+                  {
+                    icon: "💾",
+                    title: "Save & Track",
+                    desc: "Save jobs, update status (applied, interview, offer)",
+                    color: "from-emerald-500 to-teal-500",
+                  },
+                  {
+                    icon: "📊",
+                    title: "Analytics",
+                    desc: "Track progress with remote/applied stats and insights",
+                    color: "from-purple-500 to-pink-500",
+                  },
+                ].map((step, index) => (
+                  <div
+                    key={index}
+                    className="group text-center p-8 hover:-translate-y-4 transition-all duration-500 hover:shadow-2xl rounded-3xl bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 shadow-xl"
+                  >
+                    <div
+                      className={`w-20 h-20 ${step.color} bg-gradient-to-r text-3xl rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}
+                    >
+                      <span>{step.icon}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-100 mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-slate-100 group-hover:to-cyan-400 group-hover:bg-clip-text">
+                      {step.title}
+                    </h3>
+                    <p className="text-lg text-slate-300 leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </main>
+
+      {/* Toast */}
       {toast && (
-        <div className="fixed bottom-4 right-4 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm shadow-lg">
-          {toast}
+        <div className="fixed bottom-6 right-6 px-6 py-4 rounded-2xl bg-gradient-to-r from-slate-900/95 to-indigo-900/95 text-white text-base font-semibold shadow-2xl backdrop-blur-xl border border-slate-700/50 animate-in slide-in-from-bottom-4 duration-300 fade-in">
+          <div className="flex items-center gap-3">
+            <span className="text-lg">✅</span>
+            <span>{toast}</span>
+          </div>
         </div>
       )}
     </div>

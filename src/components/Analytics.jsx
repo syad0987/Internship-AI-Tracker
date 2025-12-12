@@ -1,7 +1,13 @@
 export default function Analytics({ saved }) {
   const total = saved.length;
-  const remote = saved.filter((j) =>
-    j.location?.toLowerCase().includes("remote")
+  const remoteCount = saved.filter((job) =>
+    job.location?.toLowerCase().includes("remote")
+  ).length;
+  const recentCount = saved.filter(
+    (job) =>
+      job.createdAt &&
+      new Date(job.createdAt.toDate()) >
+        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   ).length;
   const applied = saved.filter((j) =>
     j.status?.toLowerCase().includes("applied")
@@ -10,23 +16,29 @@ export default function Analytics({ saved }) {
     j.status?.toLowerCase().includes("interview")
   ).length;
 
-  if (total == 0) {
-    return null;
-  }
+  if (total === 0) return null;
+
   return (
-    <div
-      className="py-5 px-20 border border-blue-300 rounded-full bg-slate-300 
-    "
-    >
-      <h3 className="mx-0 my-2 flex flex-wrap justify-center text-2xl bg-gradient-to-r font-bold from-green-600 to-red-600  bg-clip-text  text-transparent">
+    <div className="mb-4 p-4 bg-slate-100 rounded-xl shadow-sm">
+      <h3
+        className="text-center text-2xl font-bold mb-4 
+        bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent"
+      >
         Internship Insights
       </h3>
-      <ul className=" text-1xl font-bold ">
-        <li>Total saved: {total}</li>
-        <li>Remote: {remote}</li>
-        <li>Applied: {applied}</li>
-        <li>Interview: {interview}</li>
-      </ul>
+
+      <p className="text-xs text-slate-600">
+        Total saved:
+        <span className="font-semibold text-slate-900 ml-1">{total}</span> •
+        Remote:
+        <span className="font-semibold text-emerald-600 ml-1">
+          {remoteCount}
+        </span>{" "}
+        • Recent:
+        <span className="font-semibold text-blue-600 ml-1">{recentCount}</span>•
+        Applied: <span className="text-emerald-700">{applied}</span>• Interview:{" "}
+        <span className="text-indigo-700">{interview}</span>
+      </p>
     </div>
   );
 }

@@ -5,7 +5,7 @@ Internship AI is a modern React + Firebase web application that helps students d
 🔗 Demo & Repository
 
 - Live Demo: https://your-live-link-here
-- GitHub Repository: https://github.com/your-username/internship-ai
+- GitHub Repository: https://github.com/syad0987/Internship-AI-Tracker
   ✅ Replace these with your actual URLs after deployment.
 
 ✨ Features

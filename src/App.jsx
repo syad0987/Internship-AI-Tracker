@@ -49,68 +49,62 @@ function App() {
       <main className="p-6 text-slate-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Hero Section */}
-          <section className="py-15 md:py-32 relative overflow-hidden bg-gradient-to-br from-slate-800/90 via-indigo-900/80 to-slate-900/90 border border-slate-700/50 rounded-3xl shadow-2xl backdrop-blur-sm before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-500/20 before:to-purple-500/20 before:rounded-3xl">
-            <div className="relative z-10 px-6 sm:px-8 text-center border border-slate-600/50 rounded-3xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 backdrop-blur-xl p-10 sm:p-12 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:-translate-y-2 mx-6 py-5">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 rounded-3xl blur-xl animate-pulse"></div>
+          <section className="py-6 sm:py-12 md:py-20 lg:py-32 relative overflow-hidden bg-gradient-to-br from-slate-800/90 via-indigo-900/80 to-slate-900/90 border border-slate-700/50 rounded-2xl shadow-2xl backdrop-blur-sm before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-500/20 before:to-purple-500/20 before:rounded-2xl  sm:mx-4 max-w-7xl mx-auto">
+            <div className="relative z-10 px-3 sm:px-6 lg:px-8 text-center border border-slate-600/50 rounded-2xl bg-gradient-to-r from-slate-800/80 to-slate-900/80 backdrop-blur-xl p-4 sm:p-8 md:p-12 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 rounded-2xl blur-xl animate-pulse"></div>
 
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight bg-gradient-to-r from-slate-100 via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-2xl hover:scale-105 transition-transform duration-500">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-3 sm:mb-6 leading-tight bg-gradient-to-r from-slate-100 via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-2xl hover:scale-105 transition-transform duration-500 [text-shadow:0_2px_4px_rgba(0,0,0,0.3)]">
                 Find Your Dream
                 <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 text-transparent bg-clip-text drop-shadow-xl">
                   Internship
                 </span>
               </h1>
 
-              <p className="text-xl sm:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed opacity-90 drop-shadow-sm">
+              <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-300 mb-6 sm:mb-12 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto leading-relaxed opacity-90 drop-shadow-sm">
                 5000+ remote & onsite internships across 100+ companies. Save,
                 track applications, and unlock powerful analytics.
               </p>
 
               <form
-                className="flex flex-col lg:flex-row gap-4 items-end max-w-4xl mx-auto group"
+                className="flex flex-col gap-3 max-w-full sm:max-w-2xl md:max-w-4xl mx-auto group"
                 onSubmit={handleSubmit}
                 role="search"
                 aria-label="Search internships"
               >
-                <label htmlFor="role" className="sr-only">
-                  Role
-                </label>
                 <input
                   id="role"
                   type="text"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  placeholder="Role (React, Frontend, Data Science...)"
-                  className="flex-1 px-6 py-4 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
-                    focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/30 
-                    focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
-                    transition-all duration-300 ease-out placeholder-slate-400
-                    text-lg font-medium group-hover:scale-[1.02] group-focus-within:scale-[1.02] text-slate-200"
+                  placeholder="Role (React, Frontend...)"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
+          focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/30 
+          focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
+          transition-all duration-300 ease-out placeholder-slate-400
+          text-sm sm:text-lg font-medium text-slate-200"
                 />
 
-                <label htmlFor="location" className="sr-only">
-                  Location
-                </label>
                 <input
                   id="location"
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Location (Remote, Bangalore, Mumbai...)"
-                  className="flex-1 px-6 py-4 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
-                    focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/30 
-                    focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
-                    transition-all duration-300 ease-out placeholder-slate-400
-                    text-lg font-medium group-hover:scale-[1.02] group-focus-within:scale-[1.02] text-slate-200"
+                  placeholder="Location (Remote, Bangalore...)"
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-slate-600/50 bg-slate-800/80 shadow-xl backdrop-blur-sm
+          focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/30 
+          focus:shadow-2xl hover:border-slate-500/70 hover:shadow-xl
+          transition-all duration-300 ease-out placeholder-slate-400
+          text-sm sm:text-lg font-medium text-slate-200"
                   aria-label="Location"
                 />
 
                 <button
                   type="submit"
-                  className="px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 
-                    text-white font-black text-lg shadow-2xl hover:shadow-3xl hover:scale-105 active:scale-95 
-                    focus:outline-none focus:ring-4 focus:ring-indigo-400/50
-                    transition-all duration-300 ease-out hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
-                    backdrop-blur-sm border border-indigo-500/40 whitespace-nowrap"
+                  className="w-full px-6 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 
+          text-white font-black text-sm sm:text-lg shadow-2xl hover:shadow-3xl hover:scale-105 active:scale-95 
+          focus:outline-none focus:ring-4 focus:ring-indigo-400/50
+          transition-all duration-300 ease-out hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
+          backdrop-blur-sm border border-indigo-500/40"
                   aria-label="Search internships"
                 >
                   🔍 Search Internships
@@ -120,6 +114,7 @@ function App() {
           </section>
 
           {/* Job Results */}
+
           <section className="py-16">
             <div className="space-y-6">
               {loading && (

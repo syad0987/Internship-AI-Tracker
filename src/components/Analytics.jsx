@@ -1,4 +1,4 @@
-export default function Analytics({ saved }) {
+export default function Analytics({ saved = [] }) {
   const total = saved.length;
   const remoteCount = saved.filter((job) =>
     job.location?.toLowerCase().includes("remote")
@@ -15,8 +15,6 @@ export default function Analytics({ saved }) {
   const interview = saved.filter((j) =>
     j.status?.toLowerCase().includes("interview")
   ).length;
-
-  if (total === 0) return null;
 
   return (
     <div className="mb-4 p-4 bg-slate-100 rounded-xl shadow-sm">

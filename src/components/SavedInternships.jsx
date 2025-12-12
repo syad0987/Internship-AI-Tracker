@@ -103,6 +103,7 @@ export default function SavedInternship({ showToast }) {
               <div className="flex gap-2 mt-2 sm:mt-0">
                 <select
                   value={job.status}
+                  className="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-slate-50 text-slate-800 shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
                   onChange={async (e) => {
                     const newstatus = e.target.value;
                     try {
@@ -117,11 +118,6 @@ export default function SavedInternship({ showToast }) {
                       console.error("Error updating status:", error);
                     }
                   }}
-                  className="text-sm border border-slate-300 rounded-lg px-3 py-1.5
-      bg-slate-50 text-slate-800 shadow-sm
-      hover:border-slate-400
-      focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400
-      transition"
                 >
                   <option value="wishlist">Wishlist</option>
                   <option value="applied">Applied</option>
